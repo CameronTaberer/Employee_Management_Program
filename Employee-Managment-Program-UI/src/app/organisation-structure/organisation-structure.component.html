@@ -1,0 +1,287 @@
+<p-tabView [(activeIndex)]="activeIndex">
+  <p-tabPanel header="Employee Table View" >
+
+    <!-- Toolbar -->
+    <p-toolbar>
+      <div class="p-toolbar-group-start">
+          <button pButton icon="pi pi-user-plus" style="margin-right: 2px;" pTooltip="Add New Employee" tooltipPosition="top" (click)="showDialog();"></button>
+          <button pButton icon="pi pi-refresh" style="margin-right: 2px;" pTooltip="Refresh" tooltipPosition="top" (click)="getAllEmployees();"></button>
+          <button pButton icon="pi pi-print" style="margin-right: 2px;" pTooltip="Export As PDF" tooltipPosition="top" (click)="exportPdf()"></button>
+      </div>
+      <div class="p-toolbar-group-center">
+          <span class="p-input-icon-left">
+              <i class="pi pi-search" *ngIf="!searchTerm"></i>
+              <i class="pi pi-times" *ngIf="searchTerm" (click)="clearSearch()"></i>
+              <input pInputText placeholder="Search" name="searchTerm" [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()"/>
+          </span>
+      </div>
+      <div class="p-toolbar-group-end">
+        <div style="display: inline-flex; flex-direction: column; gap: 8px;">
+          <div>
+            <label for="filter" style="display: block; margin-bottom: 0.5em; font-weight: bold;">Filter by:</label>
+              <p-dropdown [options]="items" optionLabel="label" placeholder="Select Filter" id="filter" name="employeeFilter" [(ngModel)]="selectedFilter" (ngModelChange)="onFilterChange(selectedFilter)">
+              </p-dropdown>
+          </div>
+        </div>
+      </div>
+    </p-toolbar>
+
+    <!-- Employee Table -->
+    <div class="card">
+      <p-table [value]="filteredEmployees" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,15]" styleClass="p-datatable-gridlines custom-table" [style]="{'min-width': '50rem', 'padding-top': '20px' }">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Profile Photo</th>
+            <th>Employee No.</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Birth Date</th>
+            <th>Salary</th>
+            <th>Position</th>
+            <th>Line Manager</th>
+            <th>Actions</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-filteredEmployees>
+          <tr>
+            <td class="centered-profile-img">
+              <img *ngIf="filteredEmployees.gravatarUrl" [src]="filteredEmployees.gravatarUrl" alt="User's Gravatar" style="width: 3rem; height: 3rem; border-radius: 50%;">
+            </td>
+            <td>{{filteredEmployees.employee_ID}}</td>
+            <td>{{filteredEmployees.employee_Name}} {{filteredEmployees.employee_Surname}}</td>
+            <td>{{filteredEmployees.employee_Email}}</td>
+            <td>{{filteredEmployees.birth_Date | date:'dd-MM-2024' }}</td>
+            <td>R{{filteredEmployees.salary | number:'1.2-2'}}</td>
+            <td>{{filteredEmployees.position.position_Name}}</td>
+            <td>{{this.employeeNameMap[filteredEmployees.manager_ID] || 'N/A'}}</td>
+            <td class="centered-content">
+              <p-toolbar [style]="{'width':'auto', 'height':'60px', 'justify-content':'center'}">
+                <p-button icon="pi pi-user-edit" (click)="loadEmployee(filteredEmployees.employee_ID)" pTooltip="Update Employee" tooltipPosition="top" [style]="{'width':'25px', 'height':'25px'}"></p-button>
+                <p-button severity="danger" icon="pi pi-trash" (click)="checkOrDeleteManager(filteredEmployees.employee_ID, filteredEmployees.employee_Name + ' ' + filteredEmployees.employee_Surname, filteredEmployees.position)" pTooltip="Delete Employee" pTooltip="Delete Employee" tooltipPosition="top" [style]="{'width':'25px', 'height':'25px'}"></p-button>
+              </p-toolbar>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </p-tabPanel>
+
+  <p-tabPanel header="Employee Organisation Structure View">
+
+    <!-- Toolbar -->
+    <p-toolbar>
+      <div class="p-toolbar-group-start">
+        <button pButton icon="pi pi-user-plus" style="margin-right: 2px;" pTooltip="Add New Employee" tooltipPosition="top" (click)="showDialog();"></button>
+        <button pButton icon="pi pi-refresh" style="margin-right: 2px;" pTooltip="Refresh" tooltipPosition="top" (click)="getAllEmployees();"></button>
+        <p-button *ngIf="zoomedOut" icon="pi pi-plus"  (click)="toggleZoom()" pTooltip="Zoom In" tooltipPosition="top"></p-button>
+        <p-button *ngIf="!zoomedOut" icon="pi pi-minus"  (click)="toggleZoom()" pTooltip="Zoom Out" tooltipPosition="top"></p-button>
+        
+      </div>
+      <div class="p-toolbar-group-center"></div>
+      <div class="p-toolbar-group-end"></div>
+    </p-toolbar>
+
+    <!-- Organisation Structure -->
+    <div class="card scrollable-org-chart" style="padding-top: 20px;">
+      <div  [ngClass]="{'zoomed-out-org-chart': zoomedOut, 'zoomed-in-org-chart': !zoomedOut}">
+        <p-organizationChart [value]="data" [(selection)]="selectedNodes">
+          <ng-template let-node pTemplate="person">
+              <div class="p-2 text-center node-content">
+                <img [src]="node.data.image" alt="User Avatar" style="margin-bottom: 10px; width: 5rem; height: 5rem; border-radius: 50%;">
+                  <div style="font-weight: bold; padding-top: 10px">{{ node.data.name }}</div>
+                  <div [style]="{'padding-bottom': '10px'}">{{ node.data.title }}</div>
+                  <p-toolbar [style]="{'width':'auto', 'height':'60px'}" class="centered-content">
+                      <p-button icon="pi pi-user-edit" (click)="loadEmployee(node.data.id)" pTooltip="Update Employee" tooltipPosition="top" [style]="{'width':'25px', 'height':'25px'}"></p-button>
+                      <p-button severity="danger" icon="pi pi-trash" (click)="checkOrDeleteManager(node.data.id, node.data.name, node.data.position)" pTooltip="Delete Employee" tooltipPosition="top" [style]="{'width':'25px', 'height':'25px'}"></p-button>
+                  </p-toolbar>
+              </div>
+          </ng-template>
+        </p-organizationChart>
+      </div>
+    </div>
+  </p-tabPanel>
+
+  <p-tabPanel header="Customize Positions">
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <div style="max-width: 80%; width: 100%;">
+
+        <!-- Toolbar -->
+        <p-toolbar>
+          <div class="p-toolbar-group-start">
+            <button pButton icon="pi pi-file" style="margin-right: 2px;" pTooltip="Add New Position" tooltipPosition="top" (click)="openAddPositionModal();"></button>
+          </div>
+          <div class="p-toolbar-group-center">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search" *ngIf="!searchString"></i>
+              <i class="pi pi-times" *ngIf="searchString" (click)="clearPositionSearch()"></i>
+              <input pInputText placeholder="Search" name="searchTerm" [(ngModel)]="searchString" (ngModelChange)="onPositionSearch(searchString)"/>
+          </span>
+          </div>
+          <div class="p-toolbar-group-end"></div>
+        </p-toolbar>
+
+        <div class="card">
+          <!-- Positions Table -->
+          <p-table [value]="searchedPositions" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,15]" [resizableColumns]="true" styleClass="p-datatable-gridlines custom-table" [style]="{'min-width': '50rem', 'padding-top': '20px'}">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Position Name</th>
+                <th>Hierachy Level</th>
+                <th>Actions</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-position>
+              <tr>
+                <td>{{position.position_Name}}</td>
+                <td>{{position.hierarchy_Level}}</td>
+                <td class="centered-content">
+                  <p-toolbar [style]="{'width':'auto', 'height':'60px'}">
+                    <p-button icon="pi pi-file-edit" (click)="openUpdatePositionModal(position)" pTooltip="Update Position" tooltipPosition="top" [style]="{'width':'25px', 'height':'25px'}"></p-button>
+                    <p-button severity="danger" icon="pi pi-trash" (click)="showPositionDeleteConfirmDialog(position.position_ID, position.position_Name)" pTooltip="Delete Position" tooltipPosition="top" [style]="{'width':'25px', 'height':'25px'}"></p-button>
+                  </p-toolbar>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add/Update Positions Modal -->
+    <div style="display: flex; justify-content: center;">
+      <p-dialog [(visible)]="visibleAddUpdatePosition">
+        <ng-template pTemplate="headless">
+          <div style="display: flex; flex-direction: column; padding: 35px 64px; gap: 10px; border-radius: 12px; background-image: radial-gradient(circle at left top, var(--primary-800), var(--primary-700));">
+            <h2 style="color: var(--primary-50); margin: 0; padding-bottom: 10px;">{{isAdd ? 'Add Position':'Update Position'}}</h2>
+            <div *ngIf="currentPosition" style="display: inline-flex; flex-direction: column; gap: 8px;">
+              <label for="employeeName" style="color: var(--primary-50); font-weight: bold;">Position Name</label>
+              <input pInputText [(ngModel)]="currentPosition.position_Name" style="background-color: rgba(255, 255, 255, 0.2); border: none; padding: 6px; color: var(--primary-50);">
+            </div>
+            <div *ngIf="currentPosition" style="display: inline-flex; flex-direction: column; gap: 8px;">
+              <label for="employeeName" style="color: var(--primary-50); font-weight: bold;">Hierarchy Level</label>
+              <input pInputText [(ngModel)]="currentPosition.hierarchy_Level" style="background-color: rgba(255, 255, 255, 0.2); border: none; padding: 6px; color: var(--primary-50);">
+            </div>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 8px;">
+              <p-button label="{{isAdd ? 'Add' : 'Update'}}" (click)="savePosition()" [disabled]="!currentPosition?.position_Name || currentPosition?.hierarchy_Level==0" [style]="{'color': 'var(--primary-50)', 'border': '1px solid rgba(255, 255, 255, 0.3)', 'width': '100%', 'padding': '0.5rem 1rem'}"></p-button>
+              <p-button label="Cancel" (click)="closeAddUpdatePositionDialog()" [style]="{'color': 'var(--primary-50)', 'border': '1px solid rgba(255, 255, 255, 0.3)', 'width': '100%', 'padding': '0.5rem 1rem'}"></p-button>
+            </div>
+          </div>
+        </ng-template>
+      </p-dialog>
+    </div>
+
+    <!-- Delete Position Modal -->
+    <div style="display: flex; justify-content: center;">
+      <p-dialog [(visible)]="visiblePositionDelete">
+        <ng-template pTemplate="headless">
+          <div  style="display: flex; flex-direction: column; padding: 35px 64px; gap: 10px; border-radius: 12px; background-image: radial-gradient(circle at left top, var(--primary-800), var(--primary-700));">
+            <h2 style="color: var(--primary-50); margin: 0; padding-bottom: 10px;">Delete Position</h2>
+            <div style="display: inline-flex; flex-direction: column; gap: 8px;">
+              <p style="color: var(--primary-50); font-weight: bold;">Are you sure you want to delete the {{positionName}} position?</p>
+            </div>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 8px;">
+              <p-button label="Confirm Delete" (click)="deletePosition(positionID); closePositionDeleteConfirmDialog()" [style]="{'color': 'var(--primary-50)', 'border': '1px solid rgba(255, 255, 255, 0.3)', 'width': '100%', 'padding': '0.5rem 1rem'}"></p-button>
+              <p-button label="Cancel" (click)="closePositionDeleteConfirmDialog()" [style]="{'color': 'var(--primary-50)', 'border': '1px solid rgba(255, 255, 255, 0.3)', 'width': '100%', 'padding': '0.5rem 1rem'}"></p-button>
+            </div>
+          </div>
+        </ng-template>
+      </p-dialog>
+    </div>
+  </p-tabPanel>
+
+  <p-tabPanel header="User Manual">
+    <iframe src="\assets\EMS User Manual.pdf" style="width:100%; height:80vh;"></iframe>
+  </p-tabPanel>
+
+  <p-tabPanel header="Technical Document">
+    <iframe src="\assets\EMS Technical Document Cameron Taberer.pdf" style="width:100%; height:80vh;"></iframe>
+  </p-tabPanel>
+
+  <p-tabPanel header="Assessment Brief">
+    <iframe src="\assets\Technical Assessment 2024.pdf" style="width:100%; height:80vh;"></iframe>
+  </p-tabPanel>
+</p-tabView>
+
+<!-- Add/Update Employee Modal -->
+<div style="display: flex; justify-content: center;">
+  <p-dialog [(visible)]="visibleAddUpdate">
+    <ng-template pTemplate="headless">
+      <div style="display: flex; flex-direction: column; padding: 35px 64px; gap: 10px; border-radius: 12px; background-image: radial-gradient(circle at left top, var(--primary-800), var(--primary-700));">
+        <h2 style="color: var(--primary-50); margin: 0; padding-bottom: 7px;">{{isAdd ? 'Add Position':'Update Position'}}</h2>
+        <div style="display: inline-flex; flex-direction: column; gap: 7px;">
+          <label for="employeeName" style="color: var(--primary-50); font-weight: bold;">Name</label>
+          <input pInputText [(ngModel)]="oneEmployee.employee_Name" type="text" id="employeeName" style="background-color: rgba(255, 255, 255, 0.2); border: none; padding: 5px; color: var(--primary-50);"/>
+        </div>
+        <div style="display: inline-flex; flex-direction: column; gap: 7px;">
+          <label for="employeeSurname" style="color: var(--primary-50); font-weight: bold;">Surname</label>
+          <input pInputText [(ngModel)]="oneEmployee.employee_Surname" type="text" id="employeeSurname" style="background-color: rgba(255, 255, 255, 0.2); border: none; padding: 5px; color: var(--primary-50);"/>
+        </div>
+        <div style="display: inline-flex; flex-direction: column; gap: 7px;">
+          <label for="employeeEmail" style="color: var(--primary-50); font-weight: bold;">Email</label>
+          <input pInputText [(ngModel)]="oneEmployee.employee_Email" type="email" id="employeeEmail" style="background-color: rgba(255, 255, 255, 0.2); border: none; padding: 5px; color: var(--primary-50);"/>
+        </div>
+        <div style="display: inline-flex; flex-direction: column; gap: 7px;">
+          <label for="employeeBirthDate" style="color: var(--primary-50); font-weight: bold;">Birth Date</label>
+          <input pInputText [(ngModel)]="oneEmployee.birth_Date" type="date" id="employeeBirthDate" style="background-color: rgba(255, 255, 255, 0.2); border: none; padding: 5px; color: var(--primary-50);"/>
+        </div>
+        <div style="display: inline-flex; flex-direction: column; gap: 7px;">
+          <label for="position" style="color: var(--primary-50); font-weight: bold;">Position</label>
+          <p-dropdown [options]="filteredPositions" class="custom-dropdown" [(ngModel)]="position_Object" (onChange)="onPositionSelected(position_Object)" optionLabel="position_Name" placeholder="Select Position" id="position" [style]="{'background-color': 'rgba(255, 255, 255, 0.2)', 'border': 'none', 'padding': '5px', 'width': '100%'}">
+          </p-dropdown>
+        </div>
+         <div style="display: inline-flex; flex-direction: column; gap: 7px;">
+          <label for="employeeSalary" style="color: var(--primary-50); font-weight: bold;">Salary</label>
+          <input pInputText [(ngModel)]="oneEmployee.salary" type="number" id="employeeSalary" style="background-color: rgba(255, 255, 255, 0.2); border: none; padding: 5px; color: var(--primary-50);"/>
+        </div>
+        <div style="display: inline-flex; flex-direction: column; gap: 7px;">
+          <label for="manager" style="color: var(--primary-50); font-weight: bold;">Manager</label>
+          <p-dropdown [options]="filteredManagers" class="custom-dropdown" [(ngModel)]="manager_Object" (onChange)="onManagerSelected(manager_Object)" optionLabel="full_Name" placeholder="Select Manager" id="manager" [style]="{'background-color': 'rgba(255, 255, 255, 0.2)', 'border': 'none', 'padding': '5px', 'color': 'var(--surface-0)', 'width': '100%'}">
+          </p-dropdown>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 7px;">
+          <p-button label="{{isAdd ? 'Add' : 'Update'}}" (click)="isAdd ? addEmployee() : updateEmployee()" [disabled]="!oneEmployee.employee_Name || !oneEmployee.employee_Surname || !oneEmployee.employee_Email || !oneEmployee.birth_Date || !position_Object || !oneEmployee.salary || !manager_Object" [style]="{'color': 'var(--primary-50)', 'border': '1px solid rgba(255, 255, 255, 0.3)', 'width': '100%', 'padding': '0.5rem 1rem'}"></p-button>
+          <p-button label="Cancel" (click)="closeDialog()" [style]="{'color': 'var(--primary-50)', 'border': '1px solid rgba(255, 255, 255, 0.3)', 'width': '100%', 'padding': '0.5rem 1rem'}"></p-button>
+        </div>
+      </div>
+    </ng-template>
+  </p-dialog>
+</div>
+
+<!-- Reassign/Delete Employee Modal -->
+<div style="display: flex; justify-content: center;">
+  <p-dialog [(visible)]="visibleReassign">
+    <ng-template pTemplate="headless">
+      <div  style="display: flex; flex-direction: column; padding: 35px 64px; gap: 10px; border-radius: 12px; background-image: radial-gradient(circle at left top, var(--primary-800), var(--primary-700));">
+        <h2 style="color: var(--primary-50); margin: 0; padding-bottom: 10px;">Reassign Employees</h2>
+        <div  *ngFor="let employee of checkEmployees" style="display: inline-flex; flex-direction: column; gap: 8px;">
+          <label for="manager" style="color: var(--primary-50); font-weight: bold;">{{employee.employee_Name}} {{employee.employee_Surname}}</label>
+          <p-dropdown class="custom-dropdown" [options]="managers" [(ngModel)]="employee.managerForDropdown" optionLabel="full_Name" id="manager" placeholder="Select New Manager" [style]="{'background-color': 'rgba(255, 255, 255, 0.2)', 'border': 'none', 'padding': '6px', 'color': 'var(--primary-50)', 'width': '100%'}"></p-dropdown>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 8px;">
+          <p-button label="Reassign & Delete" [disabled]="!allDropdownsFilled()" (click)="showDeleteConfirmDialog(); closeReassignDialog()" [style]="{'color': 'var(--primary-50)', 'border': '1px solid rgba(255, 255, 255, 0.3)', 'width': '100%', 'padding': '0.5rem 1rem'}"></p-button>
+          <p-button label="Cancel" (click)="closeReassignDialog()" [style]="{'color': 'var(--primary-50)', 'border': '1px solid rgba(255, 255, 255, 0.3)', 'width': '100%', 'padding': '0.5rem 1rem'}"></p-button>
+        </div>
+      </div>
+    </ng-template>
+  </p-dialog>
+</div>
+
+<!-- Confirm Delete Employee Modal -->
+<div style="display: flex; justify-content: center;">
+  <p-dialog [(visible)]="visibleDelete">
+    <ng-template pTemplate="headless">
+      <div  style="display: flex; flex-direction: column; padding: 35px 64px; gap: 10px; border-radius: 12px; background-image: radial-gradient(circle at left top, var(--primary-800), var(--primary-700));">
+        <h2 style="color: var(--primary-50); margin: 0; padding-bottom: 10px;">Delete Employees</h2>
+        <div style="display: inline-flex; flex-direction: column; gap: 8px;">
+          <p style="color: var(--primary-50); font-weight: bold;">
+            Are you sure you want to {{ straightDelete ? ('delete ' + employeeFullName + '?') : ('delete ' + employeeFullName + ' and reassign their subordinates?') }}
+          </p>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 8px;">
+          <p-button label="Confirm Delete" (click)="straightDelete ? deleteEmployee(this.originalManagerID): reassignAndDeleteManager(this.originalManagerID); closeDeleteConfirmDialog()" [style]="{'color': 'var(--primary-50)', 'border': '1px solid rgba(255, 255, 255, 0.3)', 'width': '100%', 'padding': '0.5rem 1rem'}"></p-button>
+          <p-button label="Cancel" (click)="closeDeleteConfirmDialog()" [style]="{'color': 'var(--primary-50)', 'border': '1px solid rgba(255, 255, 255, 0.3)', 'width': '100%', 'padding': '0.5rem 1rem'}"></p-button>
+        </div>
+      </div>
+    </ng-template>
+  </p-dialog>
+</div>

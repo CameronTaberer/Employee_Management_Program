@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/8d58dee6-4c0f-4891-864c-aadc763f08b0/resourceGroups/rg1/providers/Microsoft.Web/sites/employeemanagementprogramETA",
+    "appService.deploySubpath": "dist\\employee-managment-program-ui\\browser"
+}

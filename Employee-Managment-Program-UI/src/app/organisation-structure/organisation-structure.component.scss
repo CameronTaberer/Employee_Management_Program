@@ -1,0 +1,55 @@
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+    background-color:  var(--primary-800);
+    color: white;
+}
+
+.centered-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.centered-profile-img {
+    text-align: center;
+}
+
+:host ::ng-deep .p-button {
+    background-color: var(--primary-900) !important; 
+    color: #ffffff !important;
+    border-color: var(--primary-900) !important;
+}
+
+:host ::ng-deep .p-button.p-button-danger {
+    background-color:var(--red-600) !important;
+    color: #ffffff !important;
+    border-color: var(--red-600) !important;
+}
+
+:host ::ng-deep .custom-dropdown .p-dropdown-label  {
+    color: #ffffff;
+}
+
+:host ::ng-deep .custom-table .p-datatable-tbody > tr {
+    height: auto;
+}
+
+:host ::ng-deep .custom-table .p-datatable-tbody > tr > td,
+.custom-table .p-datatable-thead > tr > th {
+    padding: 2px 10px;
+}
+
+.scrollable-org-chart {
+    max-height: 70vh;
+    overflow: auto;
+}
+
+.zoomed-in-org-chart {
+    transform: scale(0.7);
+    transform-origin: top center;
+}
+
+.zoomed-out-org-chart {
+    transform: scale(0.4);
+    transform-origin: top center;
+}

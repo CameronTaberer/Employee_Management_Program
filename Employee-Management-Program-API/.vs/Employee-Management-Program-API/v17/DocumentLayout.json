@@ -1,0 +1,120 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\camer\\Documents\\Coding Projects\\Employee-Management-Program\\Employee-Management-Program-API\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A90BAE07-5F93-4691-8F62-CFD695613098}|Employee-Management-Program-API\\Employee-Management-Program-API.csproj|c:\\users\\camer\\documents\\coding projects\\employee-management-program\\employee-management-program-api\\employee-management-program-api\\models\\position.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A90BAE07-5F93-4691-8F62-CFD695613098}|Employee-Management-Program-API\\Employee-Management-Program-API.csproj|solutionrelative:employee-management-program-api\\models\\position.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A90BAE07-5F93-4691-8F62-CFD695613098}|Employee-Management-Program-API\\Employee-Management-Program-API.csproj|c:\\users\\camer\\documents\\coding projects\\employee-management-program\\employee-management-program-api\\employee-management-program-api\\models\\employeeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A90BAE07-5F93-4691-8F62-CFD695613098}|Employee-Management-Program-API\\Employee-Management-Program-API.csproj|solutionrelative:employee-management-program-api\\models\\employeeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A90BAE07-5F93-4691-8F62-CFD695613098}|Employee-Management-Program-API\\Employee-Management-Program-API.csproj|c:\\users\\camer\\documents\\coding projects\\employee-management-program\\employee-management-program-api\\employee-management-program-api\\models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A90BAE07-5F93-4691-8F62-CFD695613098}|Employee-Management-Program-API\\Employee-Management-Program-API.csproj|solutionrelative:employee-management-program-api\\models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A90BAE07-5F93-4691-8F62-CFD695613098}|Employee-Management-Program-API\\Employee-Management-Program-API.csproj|c:\\users\\camer\\documents\\coding projects\\employee-management-program\\employee-management-program-api\\employee-management-program-api\\controllers\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A90BAE07-5F93-4691-8F62-CFD695613098}|Employee-Management-Program-API\\Employee-Management-Program-API.csproj|solutionrelative:employee-management-program-api\\controllers\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A90BAE07-5F93-4691-8F62-CFD695613098}|Employee-Management-Program-API\\Employee-Management-Program-API.csproj|c:\\users\\camer\\documents\\coding projects\\employee-management-program\\employee-management-program-api\\employee-management-program-api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A90BAE07-5F93-4691-8F62-CFD695613098}|Employee-Management-Program-API\\Employee-Management-Program-API.csproj|solutionrelative:employee-management-program-api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A90BAE07-5F93-4691-8F62-CFD695613098}|Employee-Management-Program-API\\Employee-Management-Program-API.csproj|c:\\users\\camer\\documents\\coding projects\\employee-management-program\\employee-management-program-api\\employee-management-program-api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A90BAE07-5F93-4691-8F62-CFD695613098}|Employee-Management-Program-API\\Employee-Management-Program-API.csproj|solutionrelative:employee-management-program-api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Position.cs",
+              "DocumentMoniker": "C:\\Users\\camer\\Documents\\Coding Projects\\Employee-Management-Program\\Employee-Management-Program-API\\Employee-Management-Program-API\\Models\\Position.cs",
+              "RelativeDocumentMoniker": "Employee-Management-Program-API\\Models\\Position.cs",
+              "ToolTip": "C:\\Users\\camer\\Documents\\Coding Projects\\Employee-Management-Program\\Employee-Management-Program-API\\Employee-Management-Program-API\\Models\\Position.cs",
+              "RelativeToolTip": "Employee-Management-Program-API\\Models\\Position.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-10T15:16:09.316Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "EmployeeViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\camer\\Documents\\Coding Projects\\Employee-Management-Program\\Employee-Management-Program-API\\Employee-Management-Program-API\\Models\\EmployeeViewModel.cs",
+              "RelativeDocumentMoniker": "Employee-Management-Program-API\\Models\\EmployeeViewModel.cs",
+              "ToolTip": "C:\\Users\\camer\\Documents\\Coding Projects\\Employee-Management-Program\\Employee-Management-Program-API\\Employee-Management-Program-API\\Models\\EmployeeViewModel.cs",
+              "RelativeToolTip": "Employee-Management-Program-API\\Models\\EmployeeViewModel.cs",
+              "ViewState": "AQIAAAQAAAAAAAAAAAA7wBYAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-10T15:16:09.718Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Employee.cs",
+              "DocumentMoniker": "C:\\Users\\camer\\Documents\\Coding Projects\\Employee-Management-Program\\Employee-Management-Program-API\\Employee-Management-Program-API\\Models\\Employee.cs",
+              "RelativeDocumentMoniker": "Employee-Management-Program-API\\Models\\Employee.cs",
+              "ToolTip": "C:\\Users\\camer\\Documents\\Coding Projects\\Employee-Management-Program\\Employee-Management-Program-API\\Employee-Management-Program-API\\Models\\Employee.cs",
+              "RelativeToolTip": "Employee-Management-Program-API\\Models\\Employee.cs",
+              "ViewState": "AQIAABEAAAAAAAAAAAAswCQAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-10T15:15:56.747Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "EmployeeController.cs",
+              "DocumentMoniker": "C:\\Users\\camer\\Documents\\Coding Projects\\Employee-Management-Program\\Employee-Management-Program-API\\Employee-Management-Program-API\\Controllers\\EmployeeController.cs",
+              "RelativeDocumentMoniker": "Employee-Management-Program-API\\Controllers\\EmployeeController.cs",
+              "ToolTip": "C:\\Users\\camer\\Documents\\Coding Projects\\Employee-Management-Program\\Employee-Management-Program-API\\Employee-Management-Program-API\\Controllers\\EmployeeController.cs",
+              "RelativeToolTip": "Employee-Management-Program-API\\Controllers\\EmployeeController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACABAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-01T09:39:12.742Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\camer\\Documents\\Coding Projects\\Employee-Management-Program\\Employee-Management-Program-API\\Employee-Management-Program-API\\Program.cs",
+              "RelativeDocumentMoniker": "Employee-Management-Program-API\\Program.cs",
+              "ToolTip": "C:\\Users\\camer\\Documents\\Coding Projects\\Employee-Management-Program\\Employee-Management-Program-API\\Employee-Management-Program-API\\Program.cs",
+              "RelativeToolTip": "Employee-Management-Program-API\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-10T07:31:05.871Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\camer\\Documents\\Coding Projects\\Employee-Management-Program\\Employee-Management-Program-API\\Employee-Management-Program-API\\appsettings.json",
+              "RelativeDocumentMoniker": "Employee-Management-Program-API\\appsettings.json",
+              "ToolTip": "C:\\Users\\camer\\Documents\\Coding Projects\\Employee-Management-Program\\Employee-Management-Program-API\\Employee-Management-Program-API\\appsettings.json",
+              "RelativeToolTip": "Employee-Management-Program-API\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-04-10T07:31:03.137Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

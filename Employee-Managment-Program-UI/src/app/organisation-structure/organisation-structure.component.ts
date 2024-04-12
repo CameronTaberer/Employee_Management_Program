@@ -435,24 +435,27 @@ export class OrganisationStructureComponent implements OnInit {
     const subordinates = this.employees.filter(e => e.manager_ID === managerID);
     if (subordinates.length > 0) {
       this.checkEmployees = subordinates.map(subordinate => {
-        const managerForDropdown = this.managers.find(m => m.employee_ID === subordinate.manager_ID);
-        console.log(managerForDropdown);
-        return { ...subordinate, managerForDropdown };
-       
+        // const managerForDropdown = this.managers.find(m => m.employee_ID === subordinate.manager_ID);
+        return { ...subordinate};
+        // , managerForDropdown 
       });
       this.managers = this.managers.filter(manager => manager.employee_ID !== managerID);
-      // this.managers = this.managers.filter(e => e.position.hierarchy_Level < position.hierarchy_Level);
       
       this.showReassignDialog();
     } else {
-      this.straightDelete = true;
-      this.showDeleteConfirmDialog();
+        this.straightDelete = true;
+        this.showDeleteConfirmDialog();
     }
   }
 
   allDropdownsFilled(): boolean {
-    return this.checkEmployees.every(employee => employee.managerForDropdown && employee.managerForDropdown.employee_ID !== undefined);
-  }  
+    for (const employee of this.checkEmployees) {
+      if (!employee.managerForDropdown) {
+        return false;
+      }
+    }
+    return true;
+  }
 
   ////////////////////////////////////////////// Modal Opening and closing Methods ///////////////////////////////////////////
 

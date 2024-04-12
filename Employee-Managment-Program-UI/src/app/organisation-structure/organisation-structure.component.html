@@ -90,7 +90,7 @@
                 <img [src]="node.data.image" alt="User Avatar" style="margin-bottom: 10px; width: 5rem; height: 5rem; border-radius: 50%;">
                   <div style="font-weight: bold; padding-top: 10px">{{ node.data.name }}</div>
                   <div [style]="{'padding-bottom': '10px'}">{{ node.data.title }}</div>
-                  <p-toolbar [style]="{'width':'auto', 'height':'60px'}" class="centered-content">
+                  <p-toolbar [style]="{'height':'60px', 'width':'100px'}" class="centered-content" >
                       <p-button icon="pi pi-user-edit" (click)="loadEmployee(node.data.id)" pTooltip="Update Employee" tooltipPosition="top" [style]="{'width':'25px', 'height':'25px'}"></p-button>
                       <p-button severity="danger" icon="pi pi-trash" (click)="checkOrDeleteManager(node.data.id, node.data.name, node.data.position)" pTooltip="Delete Employee" tooltipPosition="top" [style]="{'width':'25px', 'height':'25px'}"></p-button>
                   </p-toolbar>
@@ -190,7 +190,7 @@
   </p-tabPanel>
 
   <p-tabPanel header="User Manual">
-    <iframe src="\assets\EMS User Manual.pdf" style="width:100%; height:80vh;"></iframe>
+    <iframe src="\assets\EMS User Manual Cameron Taberer.pdf" style="width:100%; height:80vh;"></iframe>
   </p-tabPanel>
 
   <p-tabPanel header="Technical Document">
